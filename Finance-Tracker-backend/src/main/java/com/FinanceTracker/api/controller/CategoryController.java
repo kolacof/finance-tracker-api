@@ -3,6 +3,8 @@ package com.FinanceTracker.api.controller;
 import com.FinanceTracker.api.dto.CategoryDTO;
 import com.FinanceTracker.api.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,7 @@ public class CategoryController {
      * @return una lista de objetos CategoryDTO que representan todas las categorías.
      */
     @GetMapping("")
-    public List<CategoryDTO> listCategories(){
-        return service.listCategories();
+    public ResponseEntity<List<CategoryDTO>>  listCategories(){
+        return new ResponseEntity<>(service.listCategories(), HttpStatus.OK);
     }
-
 }
