@@ -72,7 +72,7 @@ export class TransactionsListComponent {
     }else{
       this.tipoFiltroSelect.empty();
       this.tipoFiltroSelect.append('<option value="">Todos</option>');
-      this.table.column(5).search('').draw();
+      this.table.column(4).search('').draw();
     }
   }
   
