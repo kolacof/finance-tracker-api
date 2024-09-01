@@ -1,6 +1,6 @@
 # Proyecto Angular y Spring Boot
 
-Este repositorio contiene dos proyectos: una API REST desarrollada con Spring Boot y una aplicación frontend desarrollada con Angular. A continuación se detalla cómo ejecutar ambos proyectos después de clonar el repositorio.
+Este repositorio contiene dos proyectos: una API REST desarrollada con Spring Boot y una aplicación frontend desarrollada con Angular. A continuación se detallare cómo ejecutar ambos proyectos después de clonar el repositorio.
 
 ## Requisitos
 
@@ -10,7 +10,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
 - [Node.js](https://nodejs.org/) y [npm](https://www.npmjs.com/) (para el proyecto Angular)
 - [Maven](https://maven.apache.org/) (para el proyecto Spring Boot)
 - [Angular CLI](https://angular.io/cli) (para el proyecto Angular)
-- [Mysql] (para la creacion y conexion con la base de datos)
+- [Mysql](https://dev.mysql.com/downloads/installer/) (para la creacion y conexion con la base de datos)
 
 
 ## Crear la Base de Datos:
