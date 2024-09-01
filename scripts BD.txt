@@ -1,0 +1,38 @@
+--crear base de datos
+
+create database financetrackerBD
+
+use financetrackerBD
+
+--crear tabla "categories"
+
+
+CREATE TABLE `transactionsdb`.`categories` (
+  `CATE_ID` INT NOT NULL AUTO_INCREMENT,
+  `CATE_NAME` VARCHAR(45) NOT NULL,
+  `CATE_DESCRIPTION` VARCHAR(45) NULL,
+  PRIMARY KEY (`CATE_ID`));
+
+--crear tabla "transaction"
+
+CREATE TABLE `transactionsdb`.`transaction` (
+  `TRAN_ID` INT NOT NULL AUTO_INCREMENT,
+  `TRAN_TYPE` VARCHAR(45) NOT NULL,
+  `TRAN_AMOUNT` DECIMAL(11,3) NOT NULL,
+  `CATE_ID` INT NOT NULL,
+  `TRAN_DATE` DATE NOT NULL,
+  `TRAN_DESCRIPTION` LONGTEXT NULL,
+  PRIMARY KEY (`TRAN_ID`),
+  INDEX `TRAN_CATEGORY_FK_idx` (`CATE_ID` ASC) VISIBLE,
+  CONSTRAINT `TRAN_CATEGORY_FK`
+    FOREIGN KEY (`CATE_ID`)
+    REFERENCES `transactionsdb`.`categories` (`CATE_ID`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE);
+
+--insertar datos a la tabla categories
+
+INSERT INTO Categories (CATE_NAME, CATE_DESCRIPTION) VALUES
+('Alimentos', 'Alimentos comprados en cierto momento'),
+('Salario', 'Pago mensual del trabajo'),
+('Arriendo', 'Pago mensual de vivienda');

@@ -1,0 +1,66 @@
+<div class="spinner">
+    <ngx-spinner
+    bdColor="rgba(0, 0, 0, 0)"
+    template="<img src='/assets/spinner.gif'/>"
+    ></ngx-spinner>
+</div>
+
+<div class="titulo">
+    <h2 class="text-center">Transacción numero {{idtransaction}}</h2>
+</div>
+
+<form [formGroup]="formtransaction">
+    <div class="container row">
+        <div class="form-group col-md-6">
+            <label class="formulario__label" for="nombre"><b class="formulario__obligatorio">*</b>Tipo de transacción</label>
+            <select  class="form-select" formControlName="type">
+                <option [ngValue]="null" selected>Seleccione una opción...</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Gasto">Gasto</option>
+            </select>
+            <div class="alert alert-danger mt-2" *ngIf="type.invalid && (type.dirty || type.touched)">
+                Este es un campo obligatorio
+            </div>
+        </div>
+    
+        <div class="form-group col-md-6">
+            <label class="formulario__label" for="url"><b class="formulario__obligatorio">*</b>Cantidad</label>
+            <input class="form-control" type="text" formControlName="amount">
+            <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
+                <div *ngIf="amount.errors?.['required']">Este es un campo obligatorio.</div>
+                <div *ngIf="amount.errors?.['pattern']">
+                    Solo puedes incluir valores númericos o decimales
+                </div>
+            </div>
+        </div>
+    
+        <div class="form-group col-md-6">
+            <label class="formulario__label" for="descripcion"><b class="formulario__obligatorio">*</b>Categoría:</label>
+            <select  class="form-select modal__input" formControlName="categoryName">
+                <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+            </select>
+            <div  class="alert alert-danger mt-2" *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched)">
+                Este es un campo obligatorio
+            </div>
+        </div>
+    
+        <div class="form-group col-md-6">
+            <label class="formulario__label" for="fecha"><b class="formulario__obligatorio">*</b>Fecha de transacción:</label>
+            <input class="form-control" type="date" formControlName="date">
+            <div class="alert alert-danger mt-2" *ngIf="date.invalid && (date.dirty || date.touched)">
+                Este es un campo obligatorio
+            </div>
+        </div>
+    
+        <div class="form-group col-md-12">
+            <label class="formulario__label" for="">Descripción:</label>
+            <textarea rows="10" class="form-control" formControlName="description" required >
+            </textarea>
+        </div>
+        <div class="buttons form-group">
+            <button (click)="backToList()" class="btn button btn-primary">Volver</button>
+            <button (click)="updateTransaction()" class="btn button btn-success">Editar</button>
+        </div>
+    </div>
+</form>
+

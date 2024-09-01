@@ -1,0 +1,177 @@
+    <div class="spinner">
+        <ngx-spinner
+        bdColor="rgba(0, 0, 0, 0)"
+        template="<img src='/assets/spinner.gif'/>"
+        ></ngx-spinner>
+    </div>
+
+<div class="titulo">
+    <h2 class="titulo_texto text-center">Lista de transacciones</h2>
+    <div>
+        <button (click)="createTransactionModal()" data-bs-toggle="modal" data-bs-target="#createTransaction" class="btn btn_aqua">Registrar nueva transacción</button>
+    </div>
+</div>
+
+
+<div class="filtro">
+    <label for="filtroOpcion" class="filtro__label">Filtrar Por:</label>
+    <select id="filtroOpcion" class="form-select filtro__selectTipo" (change)="importarTipoFiltros()">
+        <option value="">Seleccionar una opción...</option>
+        <option value="1">Categorías</option>
+        <option value="5">Fecha</option>
+    </select>
+</div>
+
+<div class="filtro">
+    <label for="tipoFiltroSelect" class="filtro__label">Filtrar:</label>
+    <select id="tipoFiltroSelect" class="form-select filtro__select" (change)="filtrar()">
+        <option value="">Todos</option>
+    </select>
+</div>
+
+
+<div class="container__table">
+    <table id="tabla_clientes" class="cell-border table-striped hover">
+        <thead class="back">
+            <tr>
+                <th>Categoría</th>
+                <th>Cantidad</th>
+                <th>Tipo de transacción</th>
+                <th>Fecha de la transacción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let transaction of transactions">
+                <td>{{transaction.categoryName}}</td>
+                <td>{{transaction.amount}}</td>
+                <td>{{transaction.type}}</td>
+                <td>{{transaction.date}}</td>
+                <td>
+                    <div class="options">
+                        <button (click)="seeTransaction(transaction.id)" data-bs-toggle="modal" data-bs-target="#seeTransaction" class="btn btn-primary">Ver</button>
+                        <button (click)="updateTransaction(transaction.id)" class="btn btn-success">Editar</button> 
+                        <button (click)="deleteTransaction(transaction.id)" class="btn btn-danger" >Eliminar</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade modalContenedor" id="createTransaction" tabindex="-1" aria-labelledby="modalCreate" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header titulo--verde">
+                <h1 class="modal-title fs-5" id="modalPonentes">Registrar Nueva transacción</h1>
+                <i type="button" class="bi bi-x-lg" data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formtransaction" class="row g-4" >   
+                    <div class="row g-4">   
+                            <div class="form-group col-md-6">
+                                <label class="formulario__label" for=""><b class="formulario__obligatorio">*</b>Tipo de transacción:</label>
+                                <select  class="form-select" formControlName="type">
+                                    <option value="" selected>Seleccione una opción...</option>
+                                    <option value="Ingreso">Ingreso</option>
+                                    <option value="Gasto">Gasto</option>
+                                </select>
+                                <div class="alert alert-danger mt-2" *ngIf="type.invalid && (type.dirty || type.touched)">
+                                    Este es un campo obligatorio
+                                </div>
+                            </div>
+                    
+                            <div class="form-group col-md-6">
+                                <label class="formulario__label" for=""><b class="formulario__obligatorio">*</b>Monto:</label>
+                                <input class="form-control" type="text" formControlName="amount">
+                                <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="alert alert-danger">
+                                    <div *ngIf="amount.errors?.['required']">Este es un campo obligatorio.</div>
+                                    <div *ngIf="amount.errors?.['pattern']">
+                                        Solo puedes incluir valores numéricos o decimales
+                                    </div>
+                                </div>
+
+
+                            </div>
+                    
+                            <div class="form-group col-md-6">
+                                <label class="formulario__label" for=""><b class="formulario__obligatorio">*</b>Categoría:</label>
+                                <select  class="form-select modal__input" formControlName="categoryId">
+                                    <option [ngValue]="null" selected>Seleccione una opción...</option>
+                                    <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+                                </select>
+                                <div class="alert alert-danger mt-2" *ngIf="categoryId.invalid && (categoryId.dirty || categoryId.touched)">
+                                    Este es un campo obligatorio
+                                </div>
+                            </div>
+                    
+                            
+                    
+                            <div class="form-group col-md-6">
+                                <label class="formulario__label" for=""><b class="formulario__obligatorio">*</b>Fecha de registro:</label>
+                                <input class="form-control" type="date" formControlName="date">
+                                <div class="alert alert-danger mt-2" *ngIf="date.invalid && (date.dirty || date.touched)">
+                                    Este es un campo obligatorio
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label class="formulario__label" for="">Descripción:</label>
+                                <textarea rows="8" class="form-control" formControlName="description" required >
+                                </textarea>
+                            </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" (click)="createTransaction()" class="btn btn-success" data-bs-dismiss="modal">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modalContenedor" id="seeTransaction" tabindex="-1" aria-labelledby="modalSee" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header titulo--verde">
+                <h1 class="modal-title fs-5" id="modalPonentes">Transacción numero {{idtransaction}}</h1>
+                <i type="button" class="bi bi-x-lg" data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+            <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="form-group col-md-6">
+                            <label class="formulario__label" for="nombre">Tipo de transacción:</label>
+                            <input class="form-control" type="text" readonly value={{transaction.type}}>
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label class="formulario__label" for="url">Cantidad:</label>
+                            <input class="form-control" type="text" readonly value={{transaction.amount}}>
+                        </div>
+                    
+                        <div class="form-group col-md-12">
+                            <label class="formulario__label" for="descripcion">Categoría:</label>
+                            <textarea class="form-control" type="text" readonly value={{transaction.categoryName}}>
+                            </textarea>
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label class="formulario__label" for="fecha">Descripción:</label>
+                            <input class="form-control" type="text" readonly value={{transaction.description}}>
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label class="formulario__label" for="">Fecha de la transacción:</label>
+                            <input class="form-control" type="date" readonly value={{transaction.date}}>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

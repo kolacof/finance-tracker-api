@@ -1,0 +1,21 @@
+.titulo{
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 1rem;
+}
+
+.container__table{
+    padding: 8px 25px;
+    border-radius: 10px;
+    border: #666666 solid .5px;
+}
+
+.titulo--verde{
+    background-color: #37a7a1;
+}
+
+.back{
+    background-color: #37a7a1;
+}

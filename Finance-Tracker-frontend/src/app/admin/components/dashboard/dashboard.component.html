@@ -1,0 +1,20 @@
+<app-header></app-header>
+<main class="contenedorMain">
+    <div class="sidevar"[ngClass]="{show:sidenav}"> 
+        <div class="todo">
+            <app-sidevar></app-sidevar>
+        </div>
+    </div>
+    <div class="container-fluid  containerDerecha" [ngClass]="{show:sidenav}">
+        <div class="contenido__proyecto">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <div class="botonMenu">
+          <svg  (click)="cambiarEstadoMenu()" width="30" height="30" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          </svg>
+    </div> 
+</main>
+
