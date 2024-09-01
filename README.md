@@ -18,6 +18,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
 Asegúrate de tener el sistema de gestión de bases de datos instalado y ejecutándose (en este proyecto se utilizo MYSQL)
 
 Usa la herramienta de administración de tu base de datos  para crear una base de datos, los scripts se encuentran dentro de la carte "BD" en el archivo "scriptsBD.txt".
+Tener en cuenta que es necesario registrar almenos 1 o 2 categorias antes de intentar crear una transaccion (desde la app o bd) ya que sin ello no se tendra una llave foranea correspondiente a la categoria para relacionar, en el archivo de scripts tambien se encuentra un script para registrar categorias de ser necesario.
 
 ## Ejecución del Proyecto Spring Boot
 
